@@ -39,7 +39,6 @@ const signToken = (id) => {
 // User Registration
 exports.userRegisteraion = catchAsync(async (req, res, next) => {
   const { name, email, mobileNumber, password, passwordConfirm } = req.body;
-
   // 1)  check the user input file isEmpity
   if ((!name || !email || !mobileNumber, !password, !passwordConfirm)) {
     return next(new AppError("Please Provide Required filed"));
@@ -77,6 +76,7 @@ exports.userRegisteraion = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
+      apiFor: "register",
       otp,
       newUser,
       UrlToken,
@@ -106,8 +106,8 @@ exports.userRegisteraion = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
+      apiFor: "register",
       otp,
-      newUser,
       UrlToken,
     });
   }
@@ -139,6 +139,7 @@ exports.verifyOtp = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
+      apiFor: "opt-verification",
       message: "your Registration sucesfully",
     });
   } else {
@@ -230,7 +231,6 @@ exports.userLogin = catchAsync(async (req, res, next) => {
 
   // check input filed isEmpity
   if (!email || !password) {
-    console.log("run-1");
     return next(new AppError("please provide the mendatories fileds"));
   }
 
@@ -238,7 +238,6 @@ exports.userLogin = catchAsync(async (req, res, next) => {
     "+password"
   );
 
-  console.log(user.email);
   // check password
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorect email or password", 401));
