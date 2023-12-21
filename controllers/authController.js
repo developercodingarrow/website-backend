@@ -116,21 +116,25 @@ exports.userRegisteraion = catchAsync(async (req, res, next) => {
 // Verify OTP and activate user's account
 exports.verifyOtp = catchAsync(async (req, res, next) => {
   //1) Get user based on the UrlToken
+  console.log(req.body.otp);
+  console.log(req.params.token);
   const hashedToken = crypto
     .createHash("sha256")
     .update(req.params.token)
     .digest("hex");
-
-  console.log(hashedToken);
   // 2) Get the user by hashedToken
   const user = await User.findOne({ otpgenerateToken: hashedToken });
+
+  console.log(user);
 
   //3) Verify OTP and expiration time
   const currentTime = new Date();
 
+  console.log(currentTime);
+
   if (
     bcrypt.compare(req.body.otp, user.otp) &&
-    currentTime.getTime() - user.otpTimestamp.getTime() <= 600000
+    currentTime.getTime() - user.otpTimestamp.getTime() <= 6000000
   ) {
     user.otp = undefined;
     user.otpgenerateToken = undefined;
@@ -247,6 +251,7 @@ exports.userLogin = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "Success",
+    apiFor: "Login",
     token,
     message: "login succes fully",
     user,
