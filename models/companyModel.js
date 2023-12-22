@@ -12,6 +12,16 @@ const companySchema = new mongoose.Schema(
         },
       },
     ],
+    galleryPhotos: [
+      {
+        url: {
+          type: String,
+        },
+        altText: {
+          type: String,
+        },
+      },
+    ],
   },
 
   { timestamps: true }

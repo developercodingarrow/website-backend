@@ -37,6 +37,7 @@ const createMulterUpload = (
   };
 };
 
+// For logo
 const logoStorage = createMulterStorage(
   `${__dirname}/../../website-front-end/public/companies-logo`,
   "logo"
@@ -45,3 +46,17 @@ const logoStorage = createMulterStorage(
 const logoUpload = createMulterUpload(logoStorage, "logo", true);
 
 exports.logoImageMidelwear = logoUpload;
+
+// For galleries
+const galleryStorage = createMulterStorage(
+  `${__dirname}/../../website-front-end/public/companies-gallery-images`,
+  "logo"
+);
+
+const galleryUpload = createMulterUpload(
+  galleryStorage,
+  "galleryPhotos",
+  true,
+  10
+);
+exports.galleryImageMidelwear = galleryUpload;

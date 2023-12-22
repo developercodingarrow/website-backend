@@ -3,7 +3,6 @@ const AppError = require("../utils/appError");
 const Companies = require("../models/companyModel");
 
 exports.uploadLogo = catchAsync(async (req, res, next) => {
-  console.log(req);
   const image = req.files.filename;
 
   const newCompany = new Companies({
@@ -22,6 +21,38 @@ exports.uploadLogo = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       company: savedCompany,
+    },
+  });
+});
+
+exports.uploadGallery = catchAsync(async (req, res, next) => {
+  const galleryImages = req.files;
+  const id = req.params.id;
+  const images = galleryImages.map((file) => ({
+    url: file.filename,
+    altText: req.body.altText,
+  }));
+
+  const company = await Companies.findById(id);
+  if (!company) {
+    return res
+      .status(404)
+      .json({ status: "error", message: "Company not found" });
+  }
+  // If galleryPhotos array doesn't exist in the company document, create it with the images
+  if (!company.galleryPhotos) {
+    company.galleryPhotos = images;
+  } else {
+    // If galleryPhotos array exists, push the new images into it
+    company.galleryPhotos.push(...images);
+  }
+
+  const updatedCompany = await company.save();
+
+  res.status(201).json({
+    status: "success",
+    data: {
+      company: updatedCompany,
     },
   });
 });
