@@ -20,6 +20,9 @@ const companySchema = new mongoose.Schema(
         altText: {
           type: String,
         },
+        descreption: {
+          type: String,
+        },
       },
     ],
   },

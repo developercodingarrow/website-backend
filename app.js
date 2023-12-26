@@ -4,6 +4,7 @@ const globalErrorHandler = require("./utils/errorController");
 const UserRoute = require("./routes/UserRoutes");
 const TestRoute = require("./routes/testRoute");
 const CompaniesRpute = require("./routes/CompaniesRoute");
+const FormFiledRouter = require("./routes/FormFiledRouter");
 const cors = require("cors");
 
 // Midelwears
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/v1/first-website/user", UserRoute);
 app.use("/api/v1/first-website/test", TestRoute);
 app.use("/api/v1/first-website/companies", CompaniesRpute);
+app.use("/api/v1/first-website/form-field", FormFiledRouter);
 
 // global Error Control
 app.use(globalErrorHandler);

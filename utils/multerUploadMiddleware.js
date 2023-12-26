@@ -50,7 +50,7 @@ exports.logoImageMidelwear = logoUpload;
 // For galleries
 const galleryStorage = createMulterStorage(
   `${__dirname}/../../website-front-end/public/companies-gallery-images`,
-  "logo"
+  "gallery-image"
 );
 
 const galleryUpload = createMulterUpload(
