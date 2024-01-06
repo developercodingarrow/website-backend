@@ -18,6 +18,25 @@ exports.createformFiled = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getformfiledList = catchAsync(async (req, res, next) => {
+  const result = await FormData.find();
+  res.status(200).json({
+    status: "Success",
+    message: "get form filds",
+    result,
+  });
+});
+
+exports.deleteFormField = catchAsync(async (req, res, next) => {
+  const { _id } = req.body;
+  const result = await FormData.findByIdAndDelete(_id);
+  res.status(200).json({
+    status: "Success",
+    message: "Delete Form Filed ",
+    result,
+  });
+});
+
 exports.addFormFileds = catchAsync(async (req, res, next) => {
   const { formFields } = req.body;
   const { slug } = req.params;
@@ -38,11 +57,13 @@ exports.addFormFileds = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getformfiledList = catchAsync(async (req, res, next) => {
-  const result = await FormData.find();
+exports.getSingleFormFiled = catchAsync(async (req, res, next) => {
+  const { slug } = req.params;
+  const result = await FormData.findOne({ slug: slug });
+
   res.status(200).json({
     status: "Success",
-    message: "get form filds",
+    message: "form Filed ",
     result,
   });
 });
